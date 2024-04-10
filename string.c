@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+
 char* upper;
-char* newString;
 char* lower;
-char** separator_array;
+char* newString;
 char* afterReplace;
+char** split_array;
 
 int len(char* s); 
 char* uppercase(char* s); 
@@ -30,7 +31,7 @@ int main(void)
     // Try to use any function here
 
 
-    free(separator_array);
+    free(split_array);
     free(upper);
     free(newString);
     free(lower);
@@ -78,7 +79,7 @@ bool isUpper(char* s){
 }
 
 char* lowercase(char* s){
-    lower = malloc(len(s) +1);
+    lower = malloc(len(s) +1); // lower has declared as a global variable
 
     if(lower == NULL){
         fprintf(stderr,"Memory allocation failed\n");
@@ -179,7 +180,7 @@ char *removeSpace(char *s)
 }
 
 char* replace(char* s,char oldChar , char newChar){
-    afterReplace = malloc(len(s)+1);
+    afterReplace = malloc(len(s)+1); // afterReplace has declared as a global variable
     int index;
     for(index = 0 ; s[index] != '\0' ;index++){
        afterReplace[index] = s[index];
@@ -319,8 +320,8 @@ char** split(char* s,char separator){
         temp++;
     }
 
-    separator_array = malloc((separator_count + 1) * sizeof(char*));
-    if(separator_array == NULL){
+    split_array = malloc((separator_count + 1) * sizeof(char*)); //split_array has declared as a global variable
+    if(split_array == NULL){
         perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
@@ -330,35 +331,35 @@ char** split(char* s,char separator){
     while(*s != '\0'){
         if(*s == separator){
             int length = s - start;
-            separator_array[count] = malloc(length + 1);
-            if(separator_array[count] == NULL){
+            split_array[count] = malloc(length + 1);
+            if(split_array[count] == NULL){
                 perror("Memory allocation failed");
                 exit(EXIT_FAILURE);
             }
             for(int i = 0 ; i < length ; i++){
-                separator_array[count][i] = start[i];
+                split_array[count][i] = start[i];
             }
-            separator_array[count][length] = '\0';
+            split_array[count][length] = '\0';
             count++;
             start = s + 1;
         }
         s++;
     }
     int length = s - start;
-    separator_array[count] = malloc(length + 1);
-    if(separator_array[count] == NULL){
+    split_array[count] = malloc(length + 1);
+    if(split_array[count] == NULL){
         perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
     for(int i = 0 ; i < length ; i++){
-        separator_array[count][i] = start[i];
+        split_array[count][i] = start[i];
     }
-    separator_array[count][length] = '\0';
+    split_array[count][length] = '\0';
     count++;
 
-    separator_array[count] = NULL;
+    split_array[count] = NULL;
 
-    return separator_array;
+    return split_array;
 }
 
 
