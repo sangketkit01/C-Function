@@ -2,11 +2,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "String.h"
+
 char *upper;
 char *lower;
 char *newString;
 char *afterReplace;
 char **split_array;
+char* repeatString;
 
 int len(char *s);
 char *uppercase(char *s);
@@ -24,10 +27,15 @@ bool endsWithIgnoreCase(char *s, char *end);
 int indexOf(char *s, char target);
 int indexOfWithIgnoreCase(char *s, char target);
 char **split(char *s, char separator);
+bool isEmpty(char* s);
+char charAt(char* s,int index);
+char* stringRepeat(char* s , int repeat);
+void cleanMalloc();
 
 int main(void){
     //Try any function here
 
+    cleanMalloc();
     return 0;
 }
 
@@ -426,8 +434,43 @@ char **split(char *s, char separator)
     return split_array;
 }
 
-free(split_array);
-free(upper);
-free(newString);
-free(lower);
-free(afterReplace);
+bool isEmpty(char* s){
+    if(s[0] == '\0'){
+        return true;
+    }
+    return false;
+}
+
+char charAt(char* s,int index){
+    if(index > len(s)){
+        fprintf(stderr,"Index out of length\n");
+        exit(EXIT_FAILURE);
+    }
+    if(s == NULL){
+        fprintf(stderr,"Illegal NULL value\n");
+        exit(EXIT_FAILURE);
+    }
+    return s[index];
+}
+
+char* stringRepeat(char* s , int repeat){
+    repeatString = malloc(repeat * len(s) +1);
+
+    int count = 0;
+    for(int i = 0; i<repeat;i++){
+        for(int j = 0 ; j < len(s) ; j++){
+            repeatString[count++] = s[j];
+        }
+    }
+    repeatString[count] = '\0';
+    return repeatString;
+}
+
+void cleanMalloc(){
+    free(split_array);
+    free(upper);
+    free(newString);
+    free(lower);
+    free(afterReplace);
+    free(repeatString);
+}
