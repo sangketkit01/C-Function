@@ -25,6 +25,12 @@ int indexOf(char *s, char target);
 int indexOfWithIgnoreCase(char *s, char target);
 char **split(char *s, char separator);
 
+int main(void){
+    //Try any function here
+
+    return 0;
+}
+
 
 int len(char *s)
 {
