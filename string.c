@@ -25,17 +25,6 @@ int indexOf(char *s, char target);
 int indexOfWithIgnoreCase(char *s, char target);
 char **split(char *s, char separator);
 
-int main(void)
-{
-    // Try to use any function here
-
-    free(split_array);
-    free(upper);
-    free(newString);
-    free(lower);
-    free(afterReplace);
-    return 0;
-}
 
 int len(char *s)
 {
@@ -430,3 +419,9 @@ char **split(char *s, char separator)
 
     return split_array;
 }
+
+free(split_array);
+free(upper);
+free(newString);
+free(lower);
+free(afterReplace);
