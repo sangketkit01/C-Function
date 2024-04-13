@@ -9,7 +9,9 @@ char *lower;
 char *newString;
 char *afterReplace;
 char **split_array;
-char* repeatString;
+char *repeatString;
+char *sub;
+char *joinString;
 
 int len(char *s);
 char *uppercase(char *s);
@@ -26,19 +28,24 @@ bool endsWith(char *s, char *end);
 bool endsWithIgnoreCase(char *s, char *end);
 int indexOf(char *s, char target);
 int indexOfWithIgnoreCase(char *s, char target);
+int lastIndexOf(char *s, char target);
+int lastIndexOfWithIgnoreCase(char *s, char target);
 char **split(char *s, char separator);
-bool isEmpty(char* s);
-char charAt(char* s,int index);
-char* stringRepeat(char* s , int repeat);
+bool isEmpty(char *s);
+char charAt(char *s, int index);
+char *stringRepeat(char *s, int repeat);
+char *subString(char *s, int beginIndex);
+char *join(char joiner, char *s[]);
 void cleanMalloc();
 
-int main(void){
-    //Try any function here
-
+int main(void)
+{
+    // Try any function here
+   
+   
     cleanMalloc();
     return 0;
 }
-
 
 int len(char *s)
 {
@@ -372,6 +379,47 @@ int indexOfWithIgnoreCase(char *s, char target)
     return -1;
 }
 
+int lastIndexOf(char *s, char target)
+{
+    if (s == NULL)
+    {
+        fprintf(stderr, "Illegal NULL value\n");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = len(s) - 1; i >= 0; i--)
+    {
+        if (s[i] == target)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int lastIndexOfWithIgnoreCase(char *s ,char target)
+{
+    if (s == NULL)
+    {
+        fprintf(stderr, "Illgal NULL value\n");
+        exit(EXIT_FAILURE);
+    }
+    char *newS = uppercase(s);
+    char *newTarget = &target;
+    if (*newTarget > 'Z' && *newTarget <= 'Z')
+    {
+        *newTarget = target - 32;
+    }
+
+    for (int i = len(newS) - 1; i >= 0; i--)
+    {
+        if (newS[i] == *newTarget)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
 char **split(char *s, char separator)
 {
     int separator_count = 0;
@@ -434,31 +482,39 @@ char **split(char *s, char separator)
     return split_array;
 }
 
-bool isEmpty(char* s){
-    if(s[0] == '\0'){
+bool isEmpty(char *s)
+{
+    if (s[0] == '\0')
+    {
         return true;
     }
     return false;
 }
 
-char charAt(char* s,int index){
-    if(index > len(s)){
-        fprintf(stderr,"Index out of length\n");
+char charAt(char *s, int index)
+{
+    if (index > len(s))
+    {
+        fprintf(stderr, "Index out of length\n");
         exit(EXIT_FAILURE);
     }
-    if(s == NULL){
-        fprintf(stderr,"Illegal NULL value\n");
+    if (s == NULL)
+    {
+        fprintf(stderr, "Illegal NULL value\n");
         exit(EXIT_FAILURE);
     }
     return s[index];
 }
 
-char* stringRepeat(char* s , int repeat){
-    repeatString = malloc(repeat * len(s) +1);
+char *stringRepeat(char *s, int repeat)
+{
+    repeatString = malloc(repeat * len(s) + 1);
 
     int count = 0;
-    for(int i = 0; i<repeat;i++){
-        for(int j = 0 ; j < len(s) ; j++){
+    for (int i = 0; i < repeat; i++)
+    {
+        for (int j = 0; j < len(s); j++)
+        {
             repeatString[count++] = s[j];
         }
     }
@@ -466,11 +522,52 @@ char* stringRepeat(char* s , int repeat){
     return repeatString;
 }
 
-void cleanMalloc(){
+char *subString(char *s, int beginIndex)
+{
+    sub = malloc(len(s) + 1 - beginIndex);
+    int i;
+    int j = 0;
+    for (i = beginIndex; s[i] != '\0'; i++)
+    {
+        sub[j++] = s[i];
+    }
+    sub[i] = '\0';
+    return sub;
+}
+
+char *join(char joiner, char *s[])
+{
+    int length = 0;
+    for (int i = 0; s[i] != NULL; i++)
+    {
+        for (int j = 0; j < s[i][j] != '\0'; j++)
+        {
+            length++;
+        }
+        length++;
+    }
+    int count = 0;
+    joinString = malloc(length + 1);
+    for (int i = 0; s[i] != NULL; i++)
+    {
+        for (int j = 0; s[i][j] != '\0'; j++)
+        {
+            joinString[count++] = s[i][j];
+        }
+        joinString[count++] = joiner;
+    }
+    joinString[count - 1] = '\0';
+    return joinString;
+}
+
+void cleanMalloc()
+{
     free(split_array);
     free(upper);
     free(newString);
     free(lower);
     free(afterReplace);
     free(repeatString);
+    free(sub);
+    free(joinString);
 }
