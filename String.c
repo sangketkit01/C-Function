@@ -41,8 +41,8 @@ void cleanMalloc();
 int main(void)
 {
     // Try any function here
-   
-   
+
+
     cleanMalloc();
     return 0;
 }
