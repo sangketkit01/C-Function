@@ -219,6 +219,12 @@ char *removeSpace(char *s)
 char *replace(char *s, char oldChar, char newChar)
 {
     afterReplace = malloc(len(s) + 1); // afterReplace has declared as a global variable
+    if (afterReplace == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
     int index;
     for (index = 0; s[index] != '\0'; index++)
     {
@@ -448,7 +454,7 @@ char **split(char *s, char separator)
         if (*s == separator)
         {
             int length = s - start;
-            split_array[count] = malloc(length + 1);
+            split_array[count] = malloc(length + 1); // split_array has declared as a global variable
             if (split_array[count] == NULL)
             {
                 perror("Memory allocation failed");
@@ -465,7 +471,7 @@ char **split(char *s, char separator)
         s++;
     }
     int length = s - start;
-    split_array[count] = malloc(length + 1);
+    split_array[count] = malloc(length + 1); // split_array has declared as a global variable
     if (split_array[count] == NULL)
     {
         perror("Memory allocation failed");
@@ -509,7 +515,7 @@ char charAt(char *s, int index)
 
 char *stringRepeat(char *s, int repeat)
 {
-    repeatString = malloc(repeat * len(s) + 1);
+    repeatString = malloc(repeat * len(s) + 1); // repeatString has declared as a global variable
     if (repeatString == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");
@@ -530,7 +536,7 @@ char *stringRepeat(char *s, int repeat)
 
 char *subString(char *s, int beginIndex)
 {
-    sub = malloc(len(s) + 1 - beginIndex);
+    sub = malloc(len(s) + 1 - beginIndex); // sub has declared as a global variable
     if (sub == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");
@@ -560,7 +566,7 @@ char *joinArray(char joiner, char *s[])
     }
     int count = 0;
 
-    join_Array = malloc(length + 1);
+    join_Array = malloc(length + 1); // join_array has declared as a global variable
     if (join_Array == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");
@@ -582,7 +588,7 @@ char *joinArray(char joiner, char *s[])
 char *joinString(char joiner, char *s)
 {
     char *removeSpaceString = removeSpace(s);
-    join_String = malloc(len(removeSpaceString) * 2 + 1);
+    join_String = malloc(len(removeSpaceString) * 2 + 1); // join_String has declared as a global variable
 
     if (join_String == NULL)
     {
