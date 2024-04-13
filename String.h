@@ -20,6 +20,7 @@ int lastIndexOf(char *s, char target);
 int lastIndexOfWithIgnoreCase(char *s, char target);
 char **split(char *s, char separator);
 bool isEmpty(char *s);
+bool isBlank(char *s);
 char charAt(char *s, int index);
 char *stringRepeat(char *s, int repeat);
 char *subString(char *s, int beginIndex);

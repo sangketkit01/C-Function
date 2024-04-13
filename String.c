@@ -33,6 +33,7 @@ int lastIndexOf(char *s, char target);
 int lastIndexOfWithIgnoreCase(char *s, char target);
 char **split(char *s, char separator);
 bool isEmpty(char *s);
+bool isBlank(char* s);
 char charAt(char *s, int index);
 char *stringRepeat(char *s, int repeat);
 char *subString(char *s, int beginIndex);
@@ -43,7 +44,7 @@ void cleanMalloc();
 int main(void)
 {
     // Try any function here
-
+    
     cleanMalloc();
     return 0;
 }
@@ -496,6 +497,23 @@ bool isEmpty(char *s)
         return true;
     }
     return false;
+}
+
+bool isBlank(char* s){
+    if(s == NULL){
+        fprintf(stderr,"Illgal NULL value\n");
+        exit(EXIT_FAILURE);
+    }
+    if(isEmpty(s)){
+        return false;
+    }
+
+    for(int i = 0 ; s[i] != '\0'; i++){
+        if(s[i] != ' '){
+            return false;
+        }
+    }
+    return true;
 }
 
 char charAt(char *s, int index)
