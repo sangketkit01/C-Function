@@ -11,7 +11,8 @@ char *afterReplace;
 char **split_array;
 char *repeatString;
 char *sub;
-char *joinString;
+char *join_Array;
+char *join_String;
 
 int len(char *s);
 char *uppercase(char *s);
@@ -35,13 +36,13 @@ bool isEmpty(char *s);
 char charAt(char *s, int index);
 char *stringRepeat(char *s, int repeat);
 char *subString(char *s, int beginIndex);
-char *join(char joiner, char *s[]);
+char *joinArray(char joiner, char *s[]);
+char *joinString(char joiner, char *s);
 void cleanMalloc();
 
 int main(void)
 {
     // Try any function here
-
 
     cleanMalloc();
     return 0;
@@ -396,7 +397,7 @@ int lastIndexOf(char *s, char target)
     return -1;
 }
 
-int lastIndexOfWithIgnoreCase(char *s ,char target)
+int lastIndexOfWithIgnoreCase(char *s, char target)
 {
     if (s == NULL)
     {
@@ -509,6 +510,11 @@ char charAt(char *s, int index)
 char *stringRepeat(char *s, int repeat)
 {
     repeatString = malloc(repeat * len(s) + 1);
+    if (repeatString == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
 
     int count = 0;
     for (int i = 0; i < repeat; i++)
@@ -525,6 +531,12 @@ char *stringRepeat(char *s, int repeat)
 char *subString(char *s, int beginIndex)
 {
     sub = malloc(len(s) + 1 - beginIndex);
+    if (sub == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
     int i;
     int j = 0;
     for (i = beginIndex; s[i] != '\0'; i++)
@@ -535,7 +547,7 @@ char *subString(char *s, int beginIndex)
     return sub;
 }
 
-char *join(char joiner, char *s[])
+char *joinArray(char joiner, char *s[])
 {
     int length = 0;
     for (int i = 0; s[i] != NULL; i++)
@@ -547,17 +559,52 @@ char *join(char joiner, char *s[])
         length++;
     }
     int count = 0;
-    joinString = malloc(length + 1);
+
+    join_Array = malloc(length + 1);
+    if (join_Array == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
     for (int i = 0; s[i] != NULL; i++)
     {
         for (int j = 0; s[i][j] != '\0'; j++)
         {
-            joinString[count++] = s[i][j];
+            join_Array[count++] = s[i][j];
         }
-        joinString[count++] = joiner;
+        join_Array[count++] = joiner;
     }
-    joinString[count - 1] = '\0';
-    return joinString;
+    join_Array[count - 1] = '\0';
+    return join_Array;
+}
+
+char *joinString(char joiner, char *s)
+{
+    char *removeSpaceString = removeSpace(s);
+    join_String = malloc(len(removeSpaceString) * 2 + 1);
+
+    if (join_String == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+    int i;
+    int j = 0;
+    for (i = 0; removeSpaceString[j] != '\0'; i++)
+    {
+        if (i % 2 == 0)
+        {
+            join_String[i] = removeSpaceString[j];
+            j++;
+        }
+        else
+        {
+            join_String[i] = joiner;
+        }
+    }
+    join_String[i] = '\0';
+    return join_String;
 }
 
 void cleanMalloc()
@@ -569,5 +616,6 @@ void cleanMalloc()
     free(afterReplace);
     free(repeatString);
     free(sub);
-    free(joinString);
+    free(join_Array);
+    free(join_String);
 }

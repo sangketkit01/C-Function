@@ -23,7 +23,8 @@ bool isEmpty(char *s);
 char charAt(char *s, int index);
 char *stringRepeat(char *s, int repeat);
 char *subString(char *s, int beginIndex);
-char *join(char joiner, char *s[]);
+char *joinArray(char joiner, char *s[]);
+char *joinString(char joiner, char *s);
 void cleanMalloc();
 
 #endif
