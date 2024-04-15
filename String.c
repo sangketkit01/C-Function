@@ -7,6 +7,7 @@
 char *upper;
 char *lower;
 char *newString;
+char* trimString;
 char *afterReplace;
 char **split_array;
 char *repeatString;
@@ -22,6 +23,7 @@ bool isLower(char *s);
 bool compare(char *s1, char *s2);
 bool compareIgnoreCase(char *s1, char *s2);
 char *removeSpace(char *s);
+char* trim(char* s);
 char *replace(char *s, char oldChar, char newChar);
 bool startsWith(char *s, char *start);
 bool startsWithIgnoreCase(char *s, char *start);
@@ -43,7 +45,8 @@ void cleanMalloc();
 
 int main(void)
 {
-    // Try any function here
+    // Try any function here;
+
     
     cleanMalloc();
     return 0;
@@ -215,6 +218,33 @@ char *removeSpace(char *s)
     newString[j] = '\0';
 
     return newString;
+}
+
+char* trim(char* s){
+    int begin_length = 0;
+    int end_length = 0;
+
+    for(int i = 0 ;i<len(s) ; i++){
+        if(s[i] != ' ') break;
+        begin_length++;
+    }
+    for(int j = len(s) - 1;j>=0;j--){
+        if(s[j] != ' ') break;
+        end_length++;
+    }
+
+    trimString = malloc(len(s) - begin_length - end_length + 1); // trim has declared as a global variable
+    if(trimString == NULL){
+        fprintf(stderr,"Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int length = 0;
+    for(int k = begin_length ; k<len(s) - end_length ; k++){
+        trimString[length++] = s[k];
+    }
+    trimString[length] = '\0';
+    return trimString;
 }
 
 char *replace(char *s, char oldChar, char newChar)
@@ -642,4 +672,5 @@ void cleanMalloc()
     free(sub);
     free(join_Array);
     free(join_String);
+    free(trimString);
 }

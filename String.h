@@ -1,6 +1,17 @@
 #ifndef STRING_H
 #define STRING_H
 
+extern char *upper;
+extern char *lower;
+extern char *newString;
+extern char* trimString;
+extern char *afterReplace;
+extern char **split_array;
+extern char *repeatString;
+extern char *sub;
+extern char *join_Array;
+extern char *join_String;
+
 int len(char *s);
 char *uppercase(char *s);
 bool isUpper(char *s);
@@ -9,6 +20,7 @@ bool isLower(char *s);
 bool compare(char *s1, char *s2);
 bool compareIgnoreCase(char *s1, char *s2);
 char *removeSpace(char *s);
+char *trim(char *s);
 char *replace(char *s, char oldChar, char newChar);
 bool startsWith(char *s, char *start);
 bool startsWithIgnoreCase(char *s, char *start);
