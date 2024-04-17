@@ -298,6 +298,10 @@ bool startsWith(char *s, char *start)
         fprintf(stderr, "Value can't be empty\n");
         exit(EXIT_FAILURE);
     }
+    
+    if(len(start) > len(s)){
+        return false;
+    }
 
     for (int i = 0; i < len(start); i++)
     {
@@ -322,6 +326,11 @@ bool startsWithIgnoreCase(char *s, char *start)
         fprintf(stderr, "Value can't be empty\n");
         exit(EXIT_FAILURE);
     }
+
+    if(len(start) > len(s)){
+        return false;
+    }
+
     char *newS = uppercase(s);
     char *newStart = uppercase(start);
     for (int i = 0; i < len(newStart); i++)
@@ -347,6 +356,10 @@ bool endsWith(char *s, char *end)
         fprintf(stderr, "Value can't be empty\n");
         exit(EXIT_FAILURE);
     }
+    if(len(end) > len(s)){
+        return false;
+    }
+
     int startEnd = 0;
     for (int i = len(s) - len(end); i < len(s); i++)
     {
@@ -372,6 +385,11 @@ bool endsWithIgnoreCase(char *s, char *end)
         fprintf(stderr, "Value can't be empty\n");
         exit(EXIT_FAILURE);
     }
+
+    if(len(end) > len(s)){
+        return false;
+    }
+    
     char *newS = uppercase(s);
     char *newEnd = uppercase(end);
 
